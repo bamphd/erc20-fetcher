@@ -1,33 +1,36 @@
 name: Fetch ERC20 Wallets
 
 on:
-  workflow_dispatch:  # hanya bisa dijalankan manual dari GitHub UI
+  workflow_dispatch:
   # schedule:
-  #   - cron: '0 0 * * *'  # <-- kalau mau auto tiap hari, aktifin ini
+  #   - cron: '0 0 * * *'
+  
+permissions:
+  contents: write
 
 jobs:
   fetch-wallets:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-    - name: Install dependencies
-      run: pip install requests
+      - name: Install requests
+        run: pip install requests
 
-    - name: Run fetch_wallets.py
-      run: python fetch_wallets.py
+      - name: Run fetch script
+        run: python fetch_wallets.py
 
-    - name: Commit and push output
-      run: |
-        git config --global user.name 'GitHub Action'
-        git config --global user.email 'actions@github.com'
-        git add erc20_wallets.txt
-        git commit -m "Update erc20_wallets.txt"
-        git push
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add erc20_wallets.txt
+          git commit -m "Update ERC20 wallets list" || echo "No changes"
+          git push
