@@ -1,6 +1,6 @@
 import requests
 
-url = "https://api.socialscan.io/rest/monad-testnet/v2/explorer/token/0x922da3512e2bebbe32bcce59adf7e6759fb8cea2/top_holders?page=1&size=100000"
+url = "https://api.socialscan.io/rest/monad-testnet/v2/explorer/token/0x922da3512e2bebbe32bcce59adf7e6759fb8cea2/top_holders?page=1&size=10000"
 response = requests.get(url)
 data = response.json()
 
